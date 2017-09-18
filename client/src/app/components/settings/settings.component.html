@@ -1,0 +1,66 @@
+<div class="container" > 
+  <br>
+  <br>
+  <div  class="col-sm-4 col-md-offset-3 col-md-7" >
+    <form class="form-horizontal">
+      <fieldset>
+        <legend>Account settings</legend>        
+        <div class="form-group">
+          <label for="username" class="col-lg-2 control-label">User name</label>
+          <div class="col-lg-10">
+            <!--input type="file" ng2FileSelect [uploader]="user['image']"-->
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="username" class="col-lg-2 control-label">User name</label>
+          <div class="col-lg-10">
+            <input type="text" class="form-control" id="inputDefault" placeholder="User name" value="{{user['username']}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+          <div class="col-lg-10">
+            <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{user['email']}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+          <div class="col-lg-10">
+            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+            
+          </div>
+        </div>
+        <div class="form-group block col-md-offset-3 col-md-12" >
+          <div  class="col-md-offset-2">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> I want all project notifications pushed to my e-mail
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> I want all activites pushed to my e-mail
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> I want to receive the NFI newsletter
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> I want to see when someone supports my project
+              </label>
+            </div>
+          </div>
+        </div>      
+        <div class="form-group">
+          <div class="col-md-10 col-md-offset-9">
+            <button type="submit" class="btn btn-info">Save changes</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+   

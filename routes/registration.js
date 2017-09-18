@@ -3,6 +3,8 @@ var router = express.Router();
 var passport = require('passport');
 var mongoose  = require('mongoose');
 var UserModel =  require('../models').UserModel;
+var jwt  = require('jsonwebtoken');
+var passport = require('../services/passport');
 
 router.post('/registration', function(req, res, next) {
     if(!req.body.username || !req.body.password || !req.body.email){
@@ -26,7 +28,9 @@ router.post('/registration', function(req, res, next) {
                 
                 UserModel.create(user, function(err, item) {
                     if(!err){
-                        return res.send(item);
+                        return res.send({
+                            success: true,
+                            user: user});
                     }
                     
                 });

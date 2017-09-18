@@ -7,15 +7,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">NFI</a>
+      <a class="navbar-brand" routerLink='/'>NFI</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Create project <span class="sr-only">(current)</span></a></li>
+        <li class="active"><a routerLink='/create_project'>Create project <span class="sr-only">(current)</span></a></li>
         <li><a href="#">Find project</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Settings <span class="caret"></span></a>
+        <li class="dropdown" dropdown>
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" dropdown-open  aria-expanded="false">Settings <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#">Language</a></li>
             <li><a href="#">Theme</a></li>
@@ -36,7 +36,14 @@
       <form class="navbar-form navbar-right">
         <div class="form-group">
           <ul class="nav navbar-nav">
-            <li> <a href="">{{user.username}}</a></li>
+            <li class="dropdown"  dropdown *ngIf="username"> <!--<a href="/user/{{id}}" id="username">{{username}}</a>-->
+              <a dropdown-open  id="user-menu" >{{username}}<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a [routerLink]="['user', id]">Profile</a></li>
+                <li class="divider"></li>
+                <li><a (click)="logout($event)">Exit</a></li>
+              </ul>
+            </li>
             <li><button type="submit" routerLink="/login" class="btn btn-default">Sig in</button></li>
           </ul>
         </div>

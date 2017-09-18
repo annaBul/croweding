@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalStorageService } from 'angular-2-local-storage';
+import {LoginService} from '../../services/login.service';
+import { Router} from '@angular/router';
+import {DropdownModule} from "ng2-dropdown";
 
 @Component({
   selector: 'app-navbar',
@@ -6,10 +10,38 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  username: string = '';
+  id: number;
+  constructor(private localStorageService: LocalStorageService,
+    private loginService:LoginService,
+    private router: Router,
+    
+  ) {
+    
+   }
 
-  constructor() { }
+  ngOnInit() {   
+    if(localStorage.getItem('currentUser')){
+      var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.id = currentUser.id;
+      this.username = currentUser.username;
+    }
+  }
 
-  ngOnInit() {
+  logout($event): void{
+    event.preventDefault();
+    if(localStorage.getItem('currentUser')){
+      var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.loginService.logout(currentUser)
+          .subscribe(res => {
+            if(!res.error){
+              this.username = '';
+              this.id = null;
+              localStorage.removeItem('currentUser');
+              this.router.navigate(['/']);            
+          }
+      });
+    };
   }
 
 }

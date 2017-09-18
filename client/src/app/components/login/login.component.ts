@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from '../../services/login.service';
+import { LocalStorageService } from 'angular-2-local-storage';
+import { Router} from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -13,7 +15,9 @@ export class LoginComponent{
   error: string = "";
   
   
-  constructor(private loginService:LoginService) { 
+  constructor(private loginService:LoginService, 
+    private localStorageService: LocalStorageService,
+    private router: Router) { 
     this.error ="";
   }
 
@@ -24,16 +28,18 @@ export class LoginComponent{
       email: this.email,
       password: this.password,
     }
-    console.log('a');
 
     this.loginService.login(user)
         .subscribe(res => {
           if(res.error){
             this.error = res.error;
          } else {
-           this.email ="";
-           this.password = "";
-
+          if(res.token && res.username && res.id){
+            localStorage.setItem('currentUser', JSON.stringify({ token: res.token, username: res.username, id: res.id }));
+            this.email ="";
+            this.password = "";
+            this.router.navigate(['/']);
+          }
          }
         });
   }

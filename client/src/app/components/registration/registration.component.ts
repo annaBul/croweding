@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from '../../services/login.service';
+import { Router} from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -13,13 +14,14 @@ export class  RegistrationComponent{
   password: string = "d";
   error: string = "";
   
-  constructor(private loginService:LoginService) { 
+  constructor(private loginService:LoginService,
+    private router: Router) { 
     var newUser = {
       username: this.username,
       email: this.email,
       password: this.password,
   }
-  console.log('a');
+  
   }
 
   registerNewUser($event): void{
@@ -41,7 +43,8 @@ export class  RegistrationComponent{
             this.username = "";
             this.email ="";
             this.password = "";
-
+            this.router.navigate(['/login']);
+            
           }
         });
   }

@@ -1,0 +1,49 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Subscription} from 'rxjs/Subscription';
+import { ActivatedRoute} from '@angular/router';
+import {TabsModule} from "ng2-tabs";
+import {UserService} from '../../services/user.service';
+
+@Component({
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
+})
+export class UserComponent implements OnInit, OnDestroy {
+
+  id: number;
+  user;
+  error: string;
+  currentUser = ''; 
+   
+  private routeSubscription: Subscription;
+  constructor(private route: ActivatedRoute,
+    private userService:UserService){
+      if(localStorage.getItem('currentUser')){
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      } 
+
+
+      this.routeSubscription = route.params.subscribe(params=>this.id=params['id']);
+
+      this.userService.getUser(this.id)
+      .subscribe(res => {
+        if(res.error){
+          this.error = res.error;
+       } else {
+        if(res.user){
+          this.user = res.user;
+        }
+       }
+      });
+      
+  }
+
+  ngOnInit(){
+  }
+
+  ngOnDestroy(){
+      this.routeSubscription.unsubscribe();
+  }
+
+}

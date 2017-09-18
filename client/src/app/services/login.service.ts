@@ -26,5 +26,12 @@ export class LoginService{
         return this.http.post('http://localhost:3000/login', JSON.stringify(user), {headers: headers})
             .map(res => res.json());
     }
+
+    logout(currentUser){
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.post('http://localhost:3000/logout', JSON.stringify(currentUser), {headers: headers})
+            .map(res => res.json());
+    }
     
 }

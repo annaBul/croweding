@@ -6,6 +6,17 @@
         "url": "http://localhost:3000"
     },
     "security": {
-        "tokenLife" : 3600
-    }
+        "tokenLife" : 4320,
+        "secret" : "croweding-NFI"
+    },
+    
+        "session": {
+            "secret": "it:secret",
+            "key": "some",
+            "cookie": {
+                "path": "/",
+                "httpOnly": true,
+                "maxAge": null
+            }
+        }
 }
