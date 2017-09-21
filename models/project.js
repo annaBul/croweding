@@ -25,7 +25,7 @@ var Project = new Schema({
         type: String,
         //need a default img 
     },
-    totalContribution: {
+    totalBudget: {
         type: Number,
         default: 0,
     },
@@ -33,7 +33,7 @@ var Project = new Schema({
         type: Date,
         required: true,
     },
-    contribution: {
+    budget: {
         type: Number,
         required: true,
     },
@@ -42,7 +42,7 @@ var Project = new Schema({
         required: true,
         default: "BYN"
     },
-    content: {
+    description: {
         type: String,
         required: true,
     },

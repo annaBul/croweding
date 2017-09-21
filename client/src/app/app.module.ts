@@ -6,10 +6,12 @@ import {Routes, RouterModule} from '@angular/router';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import {DropdownModule} from "ng2-dropdown";
 import {TabsModule} from "ng2-tabs";
-import { FileUploader } from 'ng2-file-upload';
+import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+import { DatePickerModule } from 'ng2-datepicker';
 
 import {LoginService} from './services/login.service';
 import {UserService} from './services/user.service';
+import {ProjectService} from './services/project.service';
 
 import { AppComponent } from './app.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
@@ -30,21 +32,25 @@ import { UserComponent } from './components/user/user.component';
 import { ProjectComponent } from './components/project/project.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { SettingsGuard }   from './components/settings/settings.guard';
 
 const appRoutes: Routes =[
   { path: '', component: MainPageComponent},
   { path: 'login', component: LoginComponent},
   { path: 'registration', component: RegistrationComponent},
   { path: 'create_project', component: CreateProjectComponent},
-  { path: 'user/:id', component: UserComponent},
-  { path: 'user/:id/settings', component: SettingsComponent},
+  { path: 'user/:id', component: UserComponent, pathMatch:'full'},
+  { path: 'user/:id/settings', component: SettingsComponent, canActivate: [SettingsGuard], pathMatch:'full'},
   { path: 'project/:id', component: ProjectComponent},
   { path: 'admin', component: AdminComponent},
+  {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
+    FileSelectDirective,
     RegistrationComponent,
     NavbarComponent,
     CardComponent,
@@ -63,6 +69,7 @@ const appRoutes: Routes =[
     ProjectComponent,
     AdminComponent,
     SettingsComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(appRoutes),
@@ -72,10 +79,13 @@ const appRoutes: Routes =[
     }),
     DropdownModule,
     TabsModule,
+    DatePickerModule,
   ],
   providers: [
     LoginService,
     UserService,
+    ProjectService,
+    SettingsGuard,
   ],
   bootstrap: [AppComponent]
 })

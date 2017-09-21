@@ -9,9 +9,9 @@ import { Router} from '@angular/router';
   styleUrls: ['./registration.component.css']
 })
 export class  RegistrationComponent{
-  username: string ="d";
-  email: string ="d@f.f";
-  password: string = "d";
+  username: string ="";
+  email: string ="";
+  password: string = "";
   error: string = "";
   
   constructor(private loginService:LoginService,

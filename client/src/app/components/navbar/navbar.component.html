@@ -36,10 +36,10 @@
       <form class="navbar-form navbar-right">
         <div class="form-group">
           <ul class="nav navbar-nav">
-            <li class="dropdown"  dropdown *ngIf="username"> <!--<a href="/user/{{id}}" id="username">{{username}}</a>-->
-              <a dropdown-open  id="user-menu" >{{username}}<span class="caret"></span></a>
+            <li class="dropdown"  dropdown *ngIf="currentUser.username"> <!--<a href="/user/{{id}}" id="username">{{username}}</a>-->
+              <a dropdown-open  id="user-menu" >{{currentUser.username}}<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a [routerLink]="['user', id]">Profile</a></li>
+                <li><a routerLink="/user/{{currentUser.id}}">Profile</a></li>
                 <li class="divider"></li>
                 <li><a (click)="logout($event)">Exit</a></li>
               </ul>

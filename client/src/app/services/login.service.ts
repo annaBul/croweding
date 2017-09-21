@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class LoginService{
     constructor(private http:Http){
-        console.log('User Service Initialized...');
+        
     }
     
   /*  getTasks(){
