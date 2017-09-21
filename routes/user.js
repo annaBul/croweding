@@ -9,8 +9,7 @@ var passport = require('../services/passport');
 router.get('/user/:id', function(req, res, next) {
     if(!req.params.id){
         return res.send({ error: 'Incorrected data' });
-    }
-   // if (req.isAuthenticated()) {
+    }{
         UserModel.findById({'_id': mongoose.Types.ObjectId(req.params.id)} , function (err, user) {
             if (err) {
                 res.statusCode = 500;
@@ -40,23 +39,63 @@ router.get('/user/:id', function(req, res, next) {
                 }          
             }
         });
-    //}
-    
+    }
 });
 
 
+router.get('/user/:id/settings',function(req, res, next) {    
+     passport.authenticate('jwt', function (err, user) {
+         if(err){
+            return res.send({error: "Some error!"});
+         }
+      if (user) {
+        var userSettings ={    
+            username: user.username,
+            id: user.id,
+            email: user.email,
+            imageUrl: user.imageUrl,
+            password: user.password,
+        }
+        return res.send({
+            success: true,
+            user: userSettings});
+      } else {
+        return res.send({error: "No access"});
+      }
+    } )(req, res, next)  
+  });
+
+
+router.post('/user/:id/settings',function(req, res, next) {    
+     passport.authenticate('jwt', function (err, user) {         
+        if (err) {
+            res.statusCode = 500;
+            console.log('Internal error(%d): %s',res.statusCode,err.message);
+            return res.send({ error: 'Server error' });
+        } else {
+            if(user)
+            {   
+                user.username = req.body.username;
+                user.email= req.body.email;
+                user.imageUrl = req.body.imageUrl;
+                if(req.body.password){
+                    user.password = req.body.password;
+                }
+               //need settings
+                user.save();
+                return res.send({
+                    success: true});
+
+            } else {
+                return res.send({error: "User don't found!"});
+            }          
+        }
+    } )(req, res, next)  
+  });
+
+
+module.exports = router;
 /*
-
-var userInfo = {
-                        username: user.username,
-                        id: user.id,
-                        email: user.email,
-                        imageUrl: user.imageUrl,
-                        resume:user.resume
-}
-
- */
-
 router.get('/user/:id/settings', function(req, res, next) {
     if(!req.params.id && !req.params.user){
         return res.send({ error: 'Incorrected data' });
@@ -91,6 +130,8 @@ router.get('/user/:id/settings', function(req, res, next) {
    // }
     
 });
+
+
 router.post('/user/:id/settings', function(req, res, next) {    
     if(!req.params.id){
         return res.send({ error: 'Incorrected data' });
@@ -126,4 +167,5 @@ router.post('/user/:id/settings', function(req, res, next) {
 });
 
 
-module.exports = router;
+
+*/

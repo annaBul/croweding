@@ -27,7 +27,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     if(localStorage.getItem('currentUser')){
       this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    } 
+    
 
     this.userService.getUserSettings(this.currentUser.id)
     .subscribe(res => {
@@ -36,7 +36,13 @@ export class SettingsComponent implements OnInit {
           this.user = res.user;
         }
       }
-    });
+      else{
+        this.router.navigate(['/']);
+      }
+    })
+   }else{
+    this.router.navigate(['/']);
+   }
   }
 
   saveChanges($event): void{

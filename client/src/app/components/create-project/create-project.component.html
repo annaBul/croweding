@@ -2,7 +2,7 @@
 <div class="info">
   <div class="col-md-offset-2 col-md-8">
     <div  class="col-md-6 user-img">
-      <img id='project-img' src="http://res.cloudinary.com/dyzdll94h/image/upload/v1505994851/bngp74njkqpynfmcn1dx.jpg" >
+      <img id='project-img' src="{{newProject['imageUrl']}}" >
     </div>
     <div class="col-md-offset-2 col-md-4">
       <div class="img-upload">
@@ -45,7 +45,7 @@
           </div>
           <div class="form-group">
             <div class="col-md-10 col-md-offset-9">
-              <button type="submit" class="btn btn-info" (click)="saveChanges($event)">Add project</button>
+              <button type="submit" class="btn btn-info" (click)="createProject($event)">Add project</button>
             </div>
           </div>
         </fieldset>

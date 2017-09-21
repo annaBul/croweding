@@ -25,15 +25,15 @@ passport.use(new LocalStrategy({
 );
 
 const jwtOptions = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
   secretOrKey: config.security.secret
 };
 
 passport.use(new JwtStrategy(jwtOptions, function (payload, done) {
-    User.findById(payload.id, (err, user) => {
+    UserModel.findById(payload.id, (err, user) => {      
       if (err) {
         return done(err)
-      }
+      }      
       if (user) {
         done(null, user)
       } else {

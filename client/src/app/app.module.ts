@@ -42,7 +42,7 @@ const appRoutes: Routes =[
   { path: 'create_project', component: CreateProjectComponent},
   { path: 'user/:id', component: UserComponent, pathMatch:'full'},
   { path: 'user/:id/settings', component: SettingsComponent, canActivate: [SettingsGuard], pathMatch:'full'},
-  { path: 'project/:id', component: ProjectComponent},
+  { path: 'project/:title', component: ProjectComponent, pathMatch:'full'},
   { path: 'admin', component: AdminComponent},
   {path: '**', component: NotFoundComponent}
 ];

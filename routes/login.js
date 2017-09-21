@@ -24,7 +24,7 @@ router.post('/login' , function(req, res, next) {
                 id: user.id               
             };
             const token = jwt.sign(payload, config.security.secret); 
-            return res.send({username: user.username, id: user.id, token: 'JWT ' + token});
+            return res.send({username: user.username, id: user.id, role: user.role, blocked: user.blocked,token: 'JWT ' + token});
         }  
       })(req, res, next);
 });

@@ -19,6 +19,7 @@ export class LoginComponent{
     private localStorageService: LocalStorageService,
     private router: Router) { 
     this.error ="";
+    console.log('asdf');
   }
 
   login($event): void{

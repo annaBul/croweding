@@ -1,3 +1,43 @@
-<p>
-  project works!
-</p>
+<app-navbar></app-navbar>
+<div class="info">
+  <div class="col-md-offset-4 col-md-8">
+    <div  class="col-md-6 user-img">
+      <img id='project-img' src="{{project['imageUrl']}}" >
+    </div>
+  </div>
+</div>
+
+<div class="container" > 
+    <div  class="col-sm-4 col-md-offset-1 col-md-8" >      
+      <div class="form-horizontal">
+        <fieldset>
+          <div class="form-group">
+            <label for="inputDefault" class="col-md-3 control-label">Project title</label>
+            <div class="input-group col-md-8">
+              <input type="text" class="form-control" id="inputDefault" placeholder="Project title" [(ngModel)]="project['title']">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="textArea" class="col-md-3 control-label">Project description</label>
+            <div class=" input-group col-md-8">
+              <textarea class="form-control" rows="10" id="textArea" [(ngModel)]="project['description']"></textarea>
+            </div>
+          </div>
+          <div class="form-group" >
+            <label for="inputDefault" class="col-md-3 control-label">Last date of project availability</label>
+            <div class="col-md-7"  id="date">
+              <ng2-datepicker [options]="options" [(ngModel)]="date"></ng2-datepicker>
+            </div>
+          </div>      
+          <div class="form-group">
+            <label for="budget" class=" col-md-3 control-label">Budget</label>
+            <div class="input-group col-md-8">                
+              <input type="text" class="form-control" [(ngModel)]="project['budget']">
+              <span class="input-group-addon">BYN</span>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  
