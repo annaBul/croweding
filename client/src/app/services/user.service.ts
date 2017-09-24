@@ -10,7 +10,7 @@ export class UserService{
         
     }
     
-    getUser(id){
+    getUser(id){        
         return this.http.get('http://localhost:3000/user/' + id)
             .map(res => res.json());
     }    
@@ -24,6 +24,12 @@ export class UserService{
                 .map(res => res.json());
         }
     }   
+
+    getUserProjects(id){
+        let headers = new Headers();
+        return this.http.get('http://localhost:3000/user/' + id+'/projects', {headers: headers})
+            .map(res => res.json());
+    }  
 
     saveSettingChanges(user){
         if(localStorage.getItem('currentUser')){

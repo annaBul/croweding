@@ -43,3 +43,34 @@
 #date{
     padding-top: 12px;
 }
+
+.large-h{
+    margin-bottom: 0px;
+}
+
+.small-h{
+    margin-top: 0px;
+}
+
+#author{
+    color:black;
+    font-size: 1.2em;
+}
+.block{
+    background-color: #f8f3e4;
+    border: 1px solid rgba(65,54,42,0.13725);
+    border-radius: 6px;
+    margin: 5px 0px 5px 0px;
+}
+#new-comment{
+    margin: 5px 10px 5px 10px;
+    padding-right: 0px;
+}
+
+.new-comment > label{
+    margin-top: 10px;
+}
+
+.new-comment > button{
+    margin-bottom: 5px;
+}

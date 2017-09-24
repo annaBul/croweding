@@ -118,5 +118,5 @@ UserModel.create(user, function(err, item) {
     console.log('r');
     
 });*/
-module.exports = UserModel;
-//module.exports = User;
+module.exports.UserModel = UserModel;
+module.exports.UserSchema = User;

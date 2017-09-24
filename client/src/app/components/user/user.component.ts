@@ -13,22 +13,25 @@ export class UserComponent implements OnInit, OnDestroy {
 
   id: number;
   user;
+  projects;
   error: string;
-  currentUser = ''; 
+  currentUser = {
+    username: ''
+  }; 
    
   private routeSubscription: Subscription;
   constructor(private route: ActivatedRoute,
     private userService:UserService){
-      if(localStorage.getItem('currentUser')){
+      if(localStorage.getItem('currentUser') !== null){        
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
       } 
 
-
       this.routeSubscription = route.params.subscribe(params=>this.id=params['id']);
-
+      
       this.userService.getUser(this.id)
       .subscribe(res => {
         if(res.error){
+          console.log(this.id);
           this.error = res.error;
        } else {
         if(res.user){
@@ -36,7 +39,17 @@ export class UserComponent implements OnInit, OnDestroy {
         }
        }
       });
-      
+
+      this.userService.getUserProjects(this.id)
+      .subscribe(res => {
+        if(res.error){
+          this.error = res.error;
+       } else {
+        if(res.projects){          
+          this.projects = res.projects;
+        }
+       }
+      });
   }
 
   ngOnInit(){

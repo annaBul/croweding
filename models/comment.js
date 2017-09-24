@@ -1,5 +1,9 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+var UserSchema = require('./user').UserSchema;
+var UserModel =  mongoose.model('User', UserSchema);
+//var ProjectSchema = docs.ProjectSchema;
+//var ProjectModel =  mongoose.model('Project', ProjectSchema);
 
 var Comment = new Schema({
     author: { 
@@ -23,4 +27,5 @@ var Comment = new Schema({
 });
 
 var CommentModel = mongoose.model('Comment', Comment);
-module.exports = CommentModel;
+module.exports.CommentModel = CommentModel;
+module.exports.CommentSchema = Comment;;

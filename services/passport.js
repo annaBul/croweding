@@ -29,7 +29,7 @@ const jwtOptions = {
   secretOrKey: config.security.secret
 };
 
-passport.use(new JwtStrategy(jwtOptions, function (payload, done) {
+passport.use(new JwtStrategy(jwtOptions, function (payload, done) {  
     UserModel.findById(payload.id, (err, user) => {      
       if (err) {
         return done(err)

@@ -1,4 +1,11 @@
 #img-project{
-    width: 100%;
-    height: 20px;
+    height: 150px;
+}
+
+#project-title{
+    padding-bottom: 30px;
+}
+
+.thumbnail:hover{
+    background-color: rgba(65,54,42,0.1);
 }

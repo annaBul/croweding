@@ -77,7 +77,6 @@ export class CreateProjectComponent implements OnInit {
   createProject($event): void{
     event.preventDefault();
     this.newProject.completionDate = new Date( +this.date.year, +this.date.month - 1,+this.date.day);
-    console.log(this.newProject.completionDate);
     this.projectService.createProject(this.newProject)
       .subscribe(res => {
         if(!res.error){  

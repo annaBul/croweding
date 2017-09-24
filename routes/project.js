@@ -3,6 +3,8 @@ var router = express.Router();
 var passport = require('passport');
 var mongoose  = require('mongoose');
 var ProjectModel =  require('../models').ProjectModel;
+var UserModel =  require('../models').UserModel;
+var CommentModel =  require('../models').CommentModel;
 var jwt  = require('jsonwebtoken');
 var passport = require('../services/passport');
 
@@ -11,18 +13,20 @@ router.get('/project/:title', function(req, res, next) {
     if(!req.params.title){
         return res.send({ error: 'Incorrected data' });
     }
-        ProjectModel.findOne({'title': req.params.title} , function (err, project) {
+        ProjectModel.findOne({'title': req.params.title}).populate('author').
+        exec( function (err, project) {
             if (err) {
                 res.statusCode = 500;
                 console.log('Internal error(%d): %s',res.statusCode,err.message);
                 return res.send({ error: 'Server error' });
             } else {
                 if(project)
-                {                
-                                        
-                    return res.send({
-                        success: true,
-                        project: project});
+                {   
+                        
+                        return res.send({
+                            success: true,
+                            project: project,
+                            authorName: project.author.username});
 
                 } else {
                     return res.send({error: "Project don't found!"});
@@ -63,6 +67,9 @@ router.post('/create_project',function(req, res, next) {
                             
                             ProjectModel.create(newProject, function(err, item) {
                                 if(!err){
+
+                                    user.projects.push(item._id);
+                                    user.save();
                                     return res.send({
                                         success: true,
                                         project: newProject});
@@ -82,7 +89,162 @@ router.post('/create_project',function(req, res, next) {
    } )(req, res, next)  
  });
 
+router.get('/project/:title/comments', function(req, res, next) {
+    if(!req.params.title){
+        return res.send({ error: 'Incorrected data' });
+    }
+        ProjectModel.findOne({'title': req.params.title} , function (err, project) {
+            if (err) {
+                res.statusCode = 500;
+                console.log('Internal error(%d): %s',res.statusCode,err.message);
+                return res.send({ error: 'Server error' });
+            } else {
+                if(project)
+                {                
+                    CommentModel.find({'project': project.id }).populate('author').
+                    exec(function (err, comments) {
+                        if (err) {
+                            res.statusCode = 500;
+                            console.log('Internal error(%d): %s',res.statusCode,err.message);
+                            return res.send({ error: 'Server error' });
+                        }
+                        
+                        return res.send({
+                            success: true,
+                            comments: comments,
+                        });
+                    });
 
+                } else {
+                    return res.send({error: "Project don't found!"});
+                }          
+            }
+        });
+});
+
+
+router.post('/project/:title/add_comment', function(req, res, next) {
+    passport.authenticate('jwt', function (err, user) {    
+        if (err) {
+            res.statusCode = 401;
+            log.error('Internal error(%d): %s',res.statusCode,err.message);
+            return res.send({ error: 'Server error' });
+        }
+        ProjectModel.findOne({'title': req.params.title} , function (err, project) {
+            if (err) {
+                res.statusCode = 500;
+                log.error('Internal error(%d): %s',res.statusCode,err.message);
+                return res.send({ error: 'Server error' });
+            } else { 
+                var newComment = {
+                    author: user.id,
+                    content: req.body.content,
+                    project: project.id,
+                };
+
+                CommentModel.create(newComment, function(err, item) {
+                    if(err){
+                        res.statusCode = 500;
+                        console.log('Internal error(%d): %s',res.statusCode,err.message);
+                        return res.send({ error: 'Server error' });
+                    } else {
+                        project.comments.push(item);
+                        project.save();
+
+                        return res.send({
+                            success: true,
+                            comment: item});
+                    }
+                    
+                });
+                     
+            }
+        });
+    } )(req, res, next)  
+});
+
+
+router.get('/project/:title/supporters', function(req, res, next) {
+    if(!req.params.title){
+        return res.send({ error: 'Incorrected data' });
+    }
+        ProjectModel.findOne({'title': req.params.title} , function (err, project) {
+            if (err) {
+                res.statusCode = 500;
+                console.log('Internal error(%d): %s',res.statusCode,err.message);
+                return res.send({ error: 'Server error' });
+            } else {
+                if(project)
+                {                
+                    SupporterModel.find({'project': project.id }).populate('author').
+                    exec(function (err, supporters) {
+                        if (err) {
+                            res.statusCode = 500;
+                            console.log('Internal error(%d): %s',res.statusCode,err.message);
+                            return res.send({ error: 'Server error' });
+                        }
+                        
+                        return res.send({
+                            success: true,
+                            supporters: supporters,
+                        });
+                    });
+
+                } else {
+                    return res.send({error: "Project don't found!"});
+                }          
+            }
+        });
+});
+
+
+router.post('/project/:title/add_supporter', function(req, res, next) {
+    passport.authenticate('jwt', function (err, user) {    
+        if (err) {
+            res.statusCode = 401;
+            log.error('Internal error(%d): %s',res.statusCode,err.message);
+            return res.send({ error: 'Server error' });
+        }
+        ProjectModel.findOne({'title': req.params.title} , function (err, project) {
+            if (err) {
+                res.statusCode = 500;
+                log.error('Internal error(%d): %s',res.statusCode,err.message);
+                return res.send({ error: 'Server error' });
+            } else { 
+                var newSupporter = {
+                    author: user.id,
+                    contribution: req.body.content,
+                    project: project.id,
+                };
+                if(req.body.currency){
+                    newSupporter.currency = req.body.currency;
+                }
+
+                SupporterModel.create(newSupporter, function(err, item) {
+                    if(err){
+                        res.statusCode = 500;
+                        console.log('Internal error(%d): %s',res.statusCode,err.message);
+                        return res.send({ error: 'Server error' });
+                    } else {
+                        project.supporters.push(item);
+                        project.save();
+
+                        return res.send({
+                            success: true,
+                            supporter: item});
+                    }
+                    
+                });
+                     
+            }
+        });
+    } )(req, res, next)  
+});
+
+
+module.exports = router;
+
+/*
 router.post('/create_project', function(req, res, next) {
     if(!req.body.title || !req.body.description || !req.body.budget){
         return res.send({ error: 'Incorrected data' });
@@ -118,7 +280,4 @@ router.post('/create_project', function(req, res, next) {
         }
     });
 });
-
-
-
-module.exports = router;
+*/

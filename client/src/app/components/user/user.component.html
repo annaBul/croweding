@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="profile">
-  <div class="col-sm-offset-2 col-sm-6 userInfo">
+  <div class="col-sm-offset-3 col-sm-6 userInfo">
     <div  class="col-sm-3">
       <img class="userImg" src="{{user['imageUrl']}}" >
     </div>
@@ -14,34 +14,17 @@
 
 
 <div class="container"> 
-  <tabset>
-      <tab title="Projects">
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <img src="http://res.cloudinary.com/dyzdll94h/image/upload/v1504997764/wallpapers-nature-1_desq1m.jpg" alt="...">
-            <div class="caption">
-              <h3>Projects</h3>
-              <p>BlaBlaBla</p>
-              <p><a href="#" class="btn btn-primary" role="button">Read more</a></p>
-            </div>
-          </div>
-        </div>
+  <tabset class="col-md-offset-1 col-md-11">
+      <tab title="Projects" [active]="true">
+        <p *ngFor="let project of projects">
+           <app-card [project]="project"></app-card>
+        </p>
       </tab>
       <tab title="Support">
-          This is content of the contacts tab
-          <br/>h
-          <br/>h
-          <br/>h
-          <br/>h
-          <br/>h
+          
       </tab>
       <tab title="Comments">
-          Content of the Map Tab
-          <br/>h
-          <br/>h
-          <br/>h
-          <br/>h
-          <br/>h
+          
       </tab>
   </tabset>
 </div>

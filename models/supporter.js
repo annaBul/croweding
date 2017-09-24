@@ -1,5 +1,7 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+var UserSchema = require('./user').UserSchema;
+var UserModel =  mongoose.model('User', UserSchema);
 
 var Supporter = new Schema({
     user: { 
@@ -28,4 +30,5 @@ var Supporter = new Schema({
 });
 
 var SupporterModel = mongoose.model('Supporter', Supporter);
-module.exports = SupporterModel;
+module.exports.SupporterModel = SupporterModel;
+module.exports.SupporterShema = Supporter;

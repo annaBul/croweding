@@ -1,13 +1,15 @@
-<div class="row">
-    <div class="col-sm-3 col-md-3">
-      <div class="thumbnail" [routerLink]="['project', id]">
-        <img id="img-project" src="http://res.cloudinary.com/dyzdll94h/image/upload/v1504997764/wallpapers-nature-1_desq1m.jpg" alt="...">
-        <div class="caption">
-          <h3>Project</h3>
-          <p>...</p>
-          <p><a href="#" class="btn btn-primary" role="button">Button</a></p> 
-          <a href="#" class="btn btn-primary" role="button">Button</a>
-        </div>
-      </div>
+<div class="col-sm-3 col-md-3">
+  <div class="thumbnail col-md-11" routerLink='/project/{{project.title}}' >
+    <img id="img-project" src="{{project['imageUrl']}}" alt="" (load)='progress()'>
+    <div class="progress" >
+        <div #progress class="progress-bar progress-bar-info" id="progress_{{project['id']}}" style="width: 100%" onready='progress()'></div>
     </div>
+    <br>
+    <div class="col-md-offset-1">
+      <h5 id="project-title">{{project.title}}</h5>   
+      <h6 >Author:  {{project.author.username}}</h6>   
+      <h6 >Funded:  {{project.createdDate | date}}</h6>   
+    </div>
+    <!--p><a class="btn btn-info col-md-12" role="button" (click)="progress()">Read more</a></p--> 
   </div>
+</div>

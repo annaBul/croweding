@@ -1,5 +1,10 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+var docs = require('./index');
+var UserSchema = require('./user').UserSchema;
+var UserModel =  mongoose.model('User', UserSchema);
+//var SupporterSchema = require('./supporter').SupporterSchema;
+//var SupporterModel =  mongoose.model('Supporter', SupporterSchema);
 
 var Project = new Schema({
     author: { 
@@ -29,6 +34,10 @@ var Project = new Schema({
         type: Number,
         default: 0,
     },
+    createdDate: {
+        type: Date,
+        default: Date.now,
+    },
     completionDate: {
         type: Date,
         required: true,
@@ -46,14 +55,6 @@ var Project = new Schema({
         type: String,
         required: true,
     },
-    createdDate: {
-        type: Date,
-        default: Date.now,
-    },
-    news: [{ 
-        type: Schema.Types.ObjectId, 
-        ref: 'News',
-    }],
     comments: [{ 
         type: Schema.Types.ObjectId, 
         ref: 'Comment',
@@ -66,4 +67,5 @@ var Project = new Schema({
 });
 
 var ProjectModel = mongoose.model('Project', Project);
-module.exports = ProjectModel;
+module.exports.ProjectModel = ProjectModel;
+module.exports.ProjectSchema = Project;

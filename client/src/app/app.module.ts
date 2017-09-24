@@ -8,10 +8,12 @@ import {DropdownModule} from "ng2-dropdown";
 import {TabsModule} from "ng2-tabs";
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 import { DatePickerModule } from 'ng2-datepicker';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 import {LoginService} from './services/login.service';
 import {UserService} from './services/user.service';
 import {ProjectService} from './services/project.service';
+import {ProjectsService} from './services/projects.service';
 
 import { AppComponent } from './app.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
@@ -34,6 +36,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SettingsGuard }   from './components/settings/settings.guard';
+import { PaymentComponent } from './components/payment/payment.component';
 
 const appRoutes: Routes =[
   { path: '', component: MainPageComponent},
@@ -43,6 +46,7 @@ const appRoutes: Routes =[
   { path: 'user/:id', component: UserComponent, pathMatch:'full'},
   { path: 'user/:id/settings', component: SettingsComponent, canActivate: [SettingsGuard], pathMatch:'full'},
   { path: 'project/:title', component: ProjectComponent, pathMatch:'full'},
+  { path: 'payment', component: ProjectComponent, pathMatch:'full'},
   { path: 'admin', component: AdminComponent},
   {path: '**', component: NotFoundComponent}
 ];
@@ -70,6 +74,7 @@ const appRoutes: Routes =[
     AdminComponent,
     SettingsComponent,
     NotFoundComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(appRoutes),
@@ -80,13 +85,17 @@ const appRoutes: Routes =[
     DropdownModule,
     TabsModule,
     DatePickerModule,
+    CKEditorModule,
   ],
   providers: [
     LoginService,
     UserService,
     ProjectService,
+    ProjectsService,
     SettingsGuard,
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  
+}

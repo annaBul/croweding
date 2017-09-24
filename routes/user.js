@@ -3,8 +3,10 @@ var router = express.Router();
 var passport = require('passport');
 var mongoose  = require('mongoose');
 var UserModel =  require('../models').UserModel;
+var ProjectModel =  require('../models').ProjectModel;
 var jwt  = require('jsonwebtoken');
 var passport = require('../services/passport');
+   
 
 router.get('/user/:id', function(req, res, next) {
     if(!req.params.id){
@@ -16,7 +18,6 @@ router.get('/user/:id', function(req, res, next) {
                 console.log('Internal error(%d): %s',res.statusCode,err.message);
                 return res.send({ error: 'Server error' });
             } else {
-                console.log('user');
                 if(user)
                 {                
                     var userInfo = {
@@ -92,6 +93,90 @@ router.post('/user/:id/settings',function(req, res, next) {
         }
     } )(req, res, next)  
   });
+
+
+
+  router.get('/user/:id/projects', function(req, res, next) {
+    if(!req.params.id){
+        return res.send({ error: 'Incorrected data' });
+    }{
+        UserModel.findById({'_id': mongoose.Types.ObjectId(req.params.id)} , function (err, user) {
+            if (err) {
+                res.statusCode = 500;
+                console.log('Internal error(%d): %s',res.statusCode,err.message);
+                return res.send({ error: 'Server error' });
+            } else {
+                if(user)
+                {                
+                    ProjectModel.find({'author': user.id} , function (err, projects) {
+                        if (err) {
+                            res.statusCode = 500;
+                            console.log('Internal error(%d): %s',res.statusCode,err.message);
+                            return res.send({ error: 'Server error' });
+                        } else {
+                            if(projects.length !== 0)
+                            {     
+                                var projectsInfo = [];
+
+                                projects.forEach(function(project) {
+                                    projectsInfo.push({
+                                        title: project.title,
+                                        id: project.id,
+                                        imageUrl: project.imageUrl,
+                                        completionDate: project.completionDate,
+                                        budget: project.budget,
+                                        totalBudget: project.totalBudget,
+                                        createdDate: formatDate(project.createdDate),
+                                        author: { 
+                                            username: user.username,
+                                            id: user.id
+                                        }                                      
+                                    });
+                                }, this);
+
+                                return res.send({
+                                    success: true,
+                                    projects: projectsInfo});
+                            }
+                    
+                            return res.send({
+                            success: true,
+                            projects: []});
+                        }
+                    });
+
+                } else {
+                    return res.send({error: "User don't found!"});
+                }          
+            }
+        });
+    }
+});
+
+
+function formatDate(date) {    
+    var dd = date.getDate();
+    if (dd < 10) dd = '0' + dd;    
+    var mm = date.getMonth() + 1;
+    if (mm < 10) mm = '0' + mm;    
+    var yy = date.getFullYear() % 100;
+    if (yy < 10) yy = '0' + yy;    
+    return dd + '-' + mm + '-' + yy;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 module.exports = router;

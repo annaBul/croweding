@@ -25,6 +25,8 @@
     "angular-2-local-storage": "^1.0.1",
     "angular-tabs": "^1.0.0",
     "core-js": "^2.4.1",
+    "ng2-bootstrap": "^1.6.3",
+    "ng2-ckeditor": "^1.1.9",
     "ng2-datepicker": "^1.8.3",
     "ng2-dropdown": "0.0.21",
     "ng2-file-upload": "^1.2.1",
