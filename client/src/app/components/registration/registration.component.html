@@ -18,9 +18,14 @@
     <div class="form-group">        
         <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
         <div class="col-sm-4">
-            <input type="email" class="form-control" id="inputEmail3" [(ngModel)]="email" placeholder="Email" required>
+            <input type="email" class="form-control" id="inputEmail3" [(ngModel)]="email"  #email_="ngModel"  pattern="[^ ]*@[^ ]*"  pattern="[^ ]*@[^ ]*.[^ ]*" placeholder="Email" required>
         </div>
     </div>
+        <div class="input-group col-sm-offset-2 col-md-4">         
+            <div class=" col-md-5" [hidden]="email_.valid || email_.untouched" class="alert alert-danger">
+                Uncorrected email
+            </div> 
+        </div>
     <div class="form-group">
         <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
         <div class="col-sm-4">

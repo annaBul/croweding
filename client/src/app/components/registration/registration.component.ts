@@ -25,28 +25,30 @@ export class  RegistrationComponent{
   }
 
   registerNewUser($event): void{
-    this.error = "";
-    event.preventDefault();
-    
-    var newUser = {
-        username: this.username,
-        email: this.email,
-        password: this.password,
-    }
-    
+    if(this.username && this.email && this.password){
+      this.error = "";
+      event.preventDefault();
+      
+      var newUser = {
+          username: this.username,
+          email: this.email,
+          password: this.password,
+      }
+      
 
-    this.loginService.registerNewUser(newUser)
-        .subscribe(res => {
-          if(res.error){
-             this.error = res.error;
-          } else {
-            this.username = "";
-            this.email ="";
-            this.password = "";
-            this.router.navigate(['/login']);
-            
-          }
-        });
+      this.loginService.registerNewUser(newUser)
+          .subscribe(res => {
+            if(res.error){
+              this.error = res.error;
+            } else {
+              this.username = "";
+              this.email ="";
+              this.password = "";
+              this.router.navigate(['/login']);
+              
+            }
+      });
+    }
   }
 
 }

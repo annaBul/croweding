@@ -4,14 +4,12 @@
     <div  class="col-sm-3">
       <img class="userImg" src="{{user['imageUrl']}}" >
     </div>
-    <div class="col-sm-offset-2 col-sm-4">
+    <div class="col-md-offset-2 col-md-5">
       <h3 id="username">{{user['username']}}</h3>
       <button routerLink="/user/{{id}}/settings" type="submit" class="btn btn-info btn-sm" *ngIf="user['username']===currentUser['username']">Edit data</button>
     </div>
   </div>
 </div>
-
-
 
 <div class="container"> 
   <tabset class="col-md-offset-1 col-md-11">
@@ -24,11 +22,5 @@
         </div>
 
       </tab>
-      <!--tab title="Support">
-          
-      </tab>
-      <tab title="Comments">
-          
-      </tab-->
   </tabset>
 </div>

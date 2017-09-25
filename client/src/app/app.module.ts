@@ -22,14 +22,8 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CardComponent } from './components/card/card.component';
-import { SupporterCardComponent } from './components/supporter-card/supporter-card.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SliderComponent } from './components/slider/slider.component';
-import { TabsComponent } from './components/tabs/tabs.component';
-import { FundedShowcaseComponent } from './components/funded-showcase/funded-showcase.component';
-import { NewsComponent } from './components/news/news.component';
-import { ProfileComponent } from './components/profile/profile.component';
-import { NologinComponent } from './components/nologin/nologin.component';
 import { CreateProjectComponent } from './components/create-project/create-project.component';
 import { UserComponent } from './components/user/user.component';
 import { ProjectComponent } from './components/project/project.component';
@@ -61,15 +55,9 @@ const appRoutes: Routes =[
     RegistrationComponent,
     NavbarComponent,
     CardComponent,
-    SupporterCardComponent,
     FooterComponent,
     SliderComponent,
-    TabsComponent,
-    FundedShowcaseComponent,
-    NewsComponent,
-    ProfileComponent,
     LoginComponent,
-    NologinComponent,
     MainPageComponent,
     CreateProjectComponent,
     UserComponent,
