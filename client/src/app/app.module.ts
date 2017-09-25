@@ -50,7 +50,7 @@ const appRoutes: Routes =[
   { path: 'user/:id/settings', component: SettingsComponent, canActivate: [SettingsGuard], pathMatch:'full'},
   { path: 'project/:title', component: ProjectComponent, pathMatch:'full'},
   { path: 'payment', component: PaymentComponent, pathMatch:'full'},
-  { path: 'admin/users', component: AdminComponent, canActivate: [AdminGuard]},
+  { path: 'admin/users', component: AdminComponent, canActivate: [AdminGuard], pathMatch:'full'},
   {path: '**', component: NotFoundComponent}
 ];
 

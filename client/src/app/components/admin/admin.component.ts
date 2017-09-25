@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AdminService} from '../../services/admin.service';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -11,12 +12,12 @@ export class AdminComponent implements OnInit {
   users = [];
   error ='';
 
-  constructor(private adminService:AdminService) {
+  constructor(private adminService:AdminService,
+    private router: Router) {
     this.adminService.getUsers()
     .subscribe(res => {
       if(res.users){          
-        this.users = res.users;
-         
+        this.users = res.users;         
       }
      });
    }
@@ -31,7 +32,6 @@ export class AdminComponent implements OnInit {
         this.error = res.error;
       } else {
         this.error = '';
-        user.blocked = !user.blocked;
       }
     });
   }
