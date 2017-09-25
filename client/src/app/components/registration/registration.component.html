@@ -2,18 +2,10 @@
 <div class="container">
     <h1 class="text-center">Sign up</h1>
     <br>
-
-   <!-- <div class="top-name center-block text-center">
-        <div class="row">
-            <div class="col-md-2 col-md-offset-3"><a href="#" class="btn btn-info">Facebook</a></div>
-            <div class="col-md-2"><a href="#" class="btn btn-info">Twitter</a></div>
-            <div class="col-md-2"><a href="#" class="btn btn-info">Vkontakte</a></div>        
-        </div>
-    </div>-->
     <br>
 <div class="form-horizontal col-sm-offset-3 col-sm-10">
   <div class="form-group">
-    <div class="alert col-sm-offset-2 col-sm-4" role="alert">
+    <div [hidden]="!error" class="alert alert-danger a col-sm-offset-2 col-sm-4" role="alert">
         {{error}}
     </div>
   </div>

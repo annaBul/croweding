@@ -16,10 +16,13 @@ export class ProjectComponent implements OnInit {
   title;
   project;
   comments;
+  supporters;
   newComment = {
     content: ""
   }
   currentUser = null;
+  nowDate = Date.now();
+  completionDate;
 
   private routeSubscription: Subscription;
   constructor(private route: ActivatedRoute,
@@ -39,12 +42,14 @@ export class ProjectComponent implements OnInit {
           if(this.project.totalBudget === 0){
             this.project.progress = 0;
           } else {
-            this.project.progress = this.project.totalBudget * 100/this.project.budget;            
+            this.project.progress =  Math.round(this.project.totalBudget * 100/this.project.budget);            
           }
           var completionDate = new Date(this.project.completionDate);
           var createdDate = new Date(this.project.createdDate);
           this.project.daysLeft = Math.round((completionDate.getTime()- createdDate.getTime()) / (1000*60*60*24));
-
+          this.project.daysOver =  Math.round(( this.nowDate - completionDate.getTime()) / (1000*60*60*24)); ;
+          
+          this.completionDate = completionDate.getTime();
           this.project.createdDateFormat = this.formatDate(createdDate);
         }
        }
@@ -53,6 +58,10 @@ export class ProjectComponent implements OnInit {
 
   selectTab(currentTab:any){
     switch(currentTab){
+      case 1:{
+        this.loadSupporters();
+        break;
+      }
       case 2:{
         this.loadComments();
         break;
@@ -71,6 +80,16 @@ export class ProjectComponent implements OnInit {
     });
   }
 
+  loadSupporters(){
+    this.projectService.getSupporters(this.project.title)
+    .subscribe(res => {
+      if(!res.error){
+        this.project.supporters = res.supporters;
+        this.supporters = res.supporters;
+        console.log(this.supporters);
+      }
+    });
+  }
   addComment(){
     this.projectService.addComment(this.project, this.newComment)
     .subscribe(res => {

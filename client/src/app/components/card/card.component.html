@@ -2,7 +2,7 @@
   <div class="thumbnail col-md-11" routerLink='/project/{{project.title}}' >
     <img id="img-project" src="{{project['imageUrl']}}" alt="" (load)='progress()'>
     <div class="progress" >
-        <div #progress class="progress-bar progress-bar-info" id="progress_{{project['id']}}" style="width: 100%" onready='progress()'></div>
+        <div #progress class="progress-bar progress-bar-info" id="progress_{{project['id']}}" style="width: 0%"></div>
     </div>
     <br>
     <div class="col-md-offset-1">

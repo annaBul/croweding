@@ -74,3 +74,15 @@
 .new-comment > button{
     margin-bottom: 5px;
 }
+
+#success{
+    color: green;
+}
+
+#completed{
+    color: #DC143C;
+}
+
+#title{
+    margin-top: 5px;
+}

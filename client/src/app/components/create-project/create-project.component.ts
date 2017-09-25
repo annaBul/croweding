@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {ProjectService} from '../../services/project.service';
 import { DatePickerOptions, DateModel } from 'ng2-datepicker';
+import { Router} from '@angular/router';
 
 const CLOUDYNARY_URL = 'https://api.cloudinary.com/v1_1/dyzdll94h/image/upload';
 const CLOUDYNARY_UPLOAD_PRESET = 'xmqxl2si';
@@ -21,24 +22,26 @@ export class CreateProjectComponent implements OnInit {
       todayText: 'Oggi',
       style: 'big'
     };
-  
+    nowDate = Date.now();
     currentUser;
+    errorDate = '';
     
     newProject ={
       title: "",
       description: "",
       completionDate: null,
-      budget: 0,
+      budget: '',
       imageUrl: "http://res.cloudinary.com/dyzdll94h/image/upload/v1505994851/bngp74njkqpynfmcn1dx.jpg"
     }
 
     
 
-    constructor(private projectService:ProjectService) {
+    constructor(private projectService:ProjectService,
+      private router: Router) {
       this.options = new DatePickerOptions();
       if(localStorage.getItem('currentUser')){
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      } 
+      }       
     }
 
   ngOnInit() {
@@ -75,17 +78,24 @@ export class CreateProjectComponent implements OnInit {
   }
 
   createProject($event): void{
+    this.errorDate = '';
     event.preventDefault();
-    this.newProject.completionDate = new Date( +this.date.year, +this.date.month - 1,+this.date.day);
-    this.projectService.createProject(this.newProject)
-      .subscribe(res => {
-        if(!res.error){  
-          
-         // this.router.navigate(['/user/'+this.currentUser.id+'/settings']);        
+    if(this.newProject.title && this.newProject.description &&
+       this.newProject.budget){
+        this.newProject.completionDate = new Date( +this.date.year, +this.date.month - 1,+this.date.day);
+        if( this.newProject.completionDate.getTime() > this.nowDate){
+          this.projectService.createProject(this.newProject)
+            .subscribe(res => {
+              if(!res.error){            
+                this.router.navigate(['/user/'+this.currentUser.id]);
+              }
+              else{
+                this.message = "Sorry! Some error."; 
+              }
+          });
+        } else{
+          this.errorDate = "The day of graduation should be more than today's";
         }
-        else{
-          this.message = "Sorry! Some error."; 
-        }
-    });
+    } 
   }
 }

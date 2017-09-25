@@ -5,6 +5,7 @@ var mongoose  = require('mongoose');
 var ProjectModel =  require('../models').ProjectModel;
 var UserModel =  require('../models').UserModel;
 var CommentModel =  require('../models').CommentModel;
+var SupporterModel =  require('../models').SupporterModel;
 var jwt  = require('jsonwebtoken');
 var passport = require('../services/passport');
 
@@ -151,6 +152,7 @@ router.post('/project/:title/add_comment', function(req, res, next) {
                         project.comments.push(item);
                         project.save();
 
+                        item.author.username = user.username;
                         return res.send({
                             success: true,
                             comment: item});
@@ -176,7 +178,7 @@ router.get('/project/:title/supporters', function(req, res, next) {
             } else {
                 if(project)
                 {                
-                    SupporterModel.find({'project': project.id }).populate('author').
+                    SupporterModel.find({'project': project.id }).populate('user').
                     exec(function (err, supporters) {
                         if (err) {
                             res.statusCode = 500;
@@ -211,9 +213,10 @@ router.post('/project/:title/add_supporter', function(req, res, next) {
                 log.error('Internal error(%d): %s',res.statusCode,err.message);
                 return res.send({ error: 'Server error' });
             } else { 
+                
                 var newSupporter = {
-                    author: user.id,
-                    contribution: req.body.content,
+                    user: user._id,
+                    contribution: req.body.contribution,
                     project: project.id,
                 };
                 if(req.body.currency){
@@ -227,6 +230,7 @@ router.post('/project/:title/add_supporter', function(req, res, next) {
                         return res.send({ error: 'Server error' });
                     } else {
                         project.supporters.push(item);
+                        project.totalBudget += item.contribution;
                         project.save();
 
                         return res.send({

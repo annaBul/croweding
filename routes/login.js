@@ -19,12 +19,17 @@ router.post('/login' , function(req, res, next) {
 
         if(!user){ 
             return res.send({error: 'User doesn`t exists'});
-        } else {            
-            const payload = {
-                id: user.id               
-            };
-            const token = jwt.sign(payload, config.security.secret); 
-            return res.send({username: user.username, id: user.id, role: user.role, blocked: user.blocked,token: 'JWT ' + token});
+        } else {  
+            if(user.blocked){
+                return res.send({error: 'You are blocked and can not log in to your account'});
+            } else   
+            {                 
+                const payload = {
+                    id: user.id               
+                };
+                const token = jwt.sign(payload, config.security.secret); 
+                return res.send({username: user.username, id: user.id, role: user.role, blocked: user.blocked,token: 'JWT ' + token});
+            }
         }  
       })(req, res, next);
 });

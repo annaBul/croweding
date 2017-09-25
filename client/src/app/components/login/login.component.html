@@ -104,7 +104,7 @@
     <br>
 <div class="form-horizontal col-sm-offset-3 col-sm-10">
     <div class="form-group">
-      <div class="alert col-sm-offset-2 col-sm-4" role="alert">
+      <div  [hidden]="!error"  class="alert alert-danger col-sm-offset-1 col-sm-6" role="alert">
           {{error}}
       </div>
    </div>

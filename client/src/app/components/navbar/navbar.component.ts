@@ -12,6 +12,7 @@ import {DropdownModule} from "ng2-dropdown";
 export class NavbarComponent implements OnInit {
   username: string = '';
   id: number;
+  currentUser;
  // currentUser;
 
   constructor(private localStorageService: LocalStorageService,
@@ -24,9 +25,9 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {   
     if(localStorage.getItem('currentUser')){
-      var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-       this.id = currentUser.id;
-       this.username = currentUser.username;
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+       this.id = this.currentUser.id;
+       this.username = this.currentUser.username;
     }
   }
 

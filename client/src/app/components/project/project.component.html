@@ -1,19 +1,32 @@
 <app-navbar></app-navbar>
 <div class="info">
-  <div class="col-md-offset-3 col-md-7">
+  <div class="col-md-offset-2 col-md-9">
     <div  class="col-md-5 user-img">
       <img id='project-img' src="{{project['imageUrl']}}" >
     </div>
-    <div class="col-md-offset-3 col-md-4">
+    <div class="col-md-offset-2 col-md-5">
         <div>
-            <h2>{{project['title']}}</h2>
+            <h3 id='title'>{{project['title']}}</h3>
             <a routerLink="/user/{{project.author._id}}" id='author'>Author: {{project['authorName']}}</a>
             <h2 class="large-h">{{project['totalBudget']}} {{project['currency']}} ({{project['progress']}}%)</h2>
             <h5 class="small-h">pledged of {{project['budget']}} {{project['currency']}}</h5>
-            <h3 class="large-h">{{project['daysLeft']}}</h3>
-            <h5 class="small-h">days left</h5>
-            <h6>Funded: {{project['createdDateFormat']}}</h6>
-            <button type="submit" class="btn btn-info">Support project</button>
+            <div *ngIf="completionDate >= nowDate">
+              <h3 class="large-h">{{project['daysLeft']}}</h3>
+              <h5 class="small-h">days left</h5>
+              <h6>Funded: {{project['createdDateFormat']}}</h6>
+              <button *ngIf="currentUser" type="submit" routerLink='/payment' [queryParams]="{'project_title': project['title']}" class="btn btn-info" >Support project</button>
+            </div>
+            <div *ngIf="completionDate < nowDate">
+              <h3 class="large-h">{{project['daysOver']}}</h3>
+              <h5 class="small-h">days over</h5>
+              <h6>Funded: {{project['createdDateFormat']}}</h6>
+              <div id="success" *ngIf="project.progress >=100">
+                Successfully funded
+              </div>
+              <div id="completed" *ngIf="project.progress < 100">
+                  Completed
+              </div>
+            </div>
         </div>
       </div>
   </div>
@@ -25,20 +38,20 @@
       <tab title="About project" [active]="true">      
         <br>
         <br>
-          <div class="container" [innerHTML]="project['description']">             
+          <div [innerHTML]="project['description']">             
           </div>
         
       </tab>
       <tab title="Supporters /{{project.supporters.length}}" >
         <div *ngIf="project.supporters.length !== 0" >
-            <div class="form-group block col-md-offset-3 col-md-12" *ngFor="let comment of comments" > 
+            <div class="form-group block col-md-offset-3 col-md-12" *ngFor="let supporter of supporters" > 
               <div class="col-md-1">  
               </div>          
               <div class="col-md-9">
-                <a routerLink="/user/{{project.user._id}}" id='author'>{{supporter.user.username}}</a>
-                <p>{{supproter.date | date}}</p>
+                <a routerLink="/user/{{supporter.user._id}}" id='author'>{{supporter.user.username}}</a>
+                <p>{{supporter.date | date}}</p>
                 
-                {{supportet.contribution}} {{supportet.currency}} 
+                {{supporter.contribution}} {{supporter.currency}} 
               </div>
             </div>
           </div>
@@ -58,7 +71,7 @@
             <div class="col-md-1">  
             </div>          
             <div class="col-md-9">
-              <a routerLink="/user/{{project.author._id}}" id='author'>{{comment.author.username}}</a>
+              <a routerLink="/user/{{comment.author._id}}" id='author'>{{comment.author.username}}</a>
               <p>{{comment.createdDate | date}}</p>
               
               {{comment['content']}}

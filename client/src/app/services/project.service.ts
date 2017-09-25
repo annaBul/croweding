@@ -24,7 +24,6 @@ export class ProjectService{
     }
 
     getComments(projectTitle){
-        console.log(projectTitle);
         return this.http.get('http://localhost:3000/project/' + projectTitle + '/comments')
             .map(res => res.json());
     }
@@ -41,18 +40,17 @@ export class ProjectService{
     }
 
     getSupporters(projectTitle){
-        console.log(projectTitle);
         return this.http.get('http://localhost:3000/project/' + projectTitle + '/supporters')
             .map(res => res.json());
     }
 
-    addSupporter(project, newSupporter){
+    addSupporter(projectTitle, newSupporter){
         if(localStorage.getItem('currentUser')){
             var currentUser = JSON.parse(localStorage.getItem('currentUser'));
             var headers = new Headers();
             headers.append('Content-Type', 'application/json');
             headers.append('Authorization', currentUser.token); 
-            return this.http.post('http://localhost:3000/project/'+project.title+'/add_supporter', JSON.stringify(newSupporter), {headers: headers})
+            return this.http.post('http://localhost:3000/project/'+projectTitle+'/add_supporter', JSON.stringify(newSupporter), {headers: headers})
                 .map(res => res.json());
         }
     }

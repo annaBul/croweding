@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
       <ul class="nav navbar-nav">
         <li class="active"><a routerLink='/create_project'>Create project <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Find project</a></li>
+        <!--li><a href="#">Find project</a></li>
         <li class="dropdown" dropdown>
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" dropdown-open  aria-expanded="false">Settings <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -25,21 +25,22 @@
             <li class="divider"></li>
             <li><a href="#">One more separated link</a></li>
           </ul>
-        </li>
+        </li-->
       </ul>
-      <form class="navbar-form navbar-left" role="search">
+      <!--form class="navbar-form navbar-left" role="search">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search">
         </div>
         <button type="submit" class="btn btn-default">Search</button>
-      </form>
+      </form-->
       <form class="navbar-form navbar-right">
         <div class="form-group">
           <ul class="nav navbar-nav">
-            <li class="dropdown"  dropdown *ngIf="username"> <!--<a href="/user/{{id}}" id="username">{{username}}</a>-->
+            <li class="dropdown"  dropdown *ngIf="username"> 
               <a dropdown-open  id="user-menu" >{{username}}<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a routerLink="/user/{{id}}">Profile</a></li>
+                <li *ngIf='currentUser["role"] === "Admin"'><a routerLink="admin/users">Admin</a></li>
                 <li class="divider"></li>
                 <li><a (click)="logout($event)">Exit</a></li>
               </ul>

@@ -17,6 +17,7 @@ var login = require('./routes/login');
 var user = require('./routes/user');
 var project = require('./routes/project');
 var projects = require('./routes/projects');
+var admin = require('./routes/admin');
 
 var app = express();
 
@@ -53,6 +54,7 @@ app.use('/', login);
 app.use('/', user);
 app.use('/', project);
 app.use('/', projects);
+app.use('/', admin);
 
 require("./services/mongoose");
 

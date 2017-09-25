@@ -27,8 +27,7 @@ var User = new Schema({
         default: false,
     },
     role: {
-        type: String,
-        enum: ['Admin', 'User'],
+        type: String,        
         default: 'User',
     },
     createdDate: {

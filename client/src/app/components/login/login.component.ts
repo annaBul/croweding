@@ -36,7 +36,7 @@ export class LoginComponent{
             this.error = res.error;
          } else {
           if(res.token && res.username && res.id){
-            localStorage.setItem('currentUser', JSON.stringify({ token: res.token, username: res.username, id: res.id }));
+            localStorage.setItem('currentUser', JSON.stringify({ token: res.token, username: res.username, id: res.id, role: res.role }));
             this.email ="";
             this.password = "";
             this.router.navigate(['/']);

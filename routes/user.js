@@ -82,7 +82,7 @@ router.post('/user/:id/settings',function(req, res, next) {
                 if(req.body.password){
                     user.password = req.body.password;
                 }
-               //need settings
+               
                 user.save();
                 return res.send({
                     success: true});
@@ -126,7 +126,7 @@ router.post('/user/:id/settings',function(req, res, next) {
                                         completionDate: project.completionDate,
                                         budget: project.budget,
                                         totalBudget: project.totalBudget,
-                                        createdDate: formatDate(project.createdDate),
+                                        createdDate: project.createdDate,
                                         author: { 
                                             username: user.username,
                                             id: user.id
@@ -153,16 +153,6 @@ router.post('/user/:id/settings',function(req, res, next) {
     }
 });
 
-
-function formatDate(date) {    
-    var dd = date.getDate();
-    if (dd < 10) dd = '0' + dd;    
-    var mm = date.getMonth() + 1;
-    if (mm < 10) mm = '0' + mm;    
-    var yy = date.getFullYear() % 100;
-    if (yy < 10) yy = '0' + yy;    
-    return dd + '-' + mm + '-' + yy;
-  }
 
 
 

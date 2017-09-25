@@ -3,9 +3,14 @@
 }
 
 #project-title{
-    padding-bottom: 30px;
+    margin-top: 5px;
+    height: 40px;
 }
 
 .thumbnail:hover{
     background-color: rgba(65,54,42,0.1);
+}
+
+.progress{
+    margin-bottom: 0px;
 }

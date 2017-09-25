@@ -14,6 +14,7 @@ import {LoginService} from './services/login.service';
 import {UserService} from './services/user.service';
 import {ProjectService} from './services/project.service';
 import {ProjectsService} from './services/projects.service';
+import {AdminService} from './services/admin.service';
 
 import { AppComponent } from './app.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
@@ -36,18 +37,20 @@ import { AdminComponent } from './components/admin/admin.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SettingsGuard }   from './components/settings/settings.guard';
+import { CreateProjectGuard }   from './components/create-project/create-project.guard';
+import { AdminGuard }   from './components/admin/admin.guard';
 import { PaymentComponent } from './components/payment/payment.component';
 
 const appRoutes: Routes =[
   { path: '', component: MainPageComponent},
   { path: 'login', component: LoginComponent},
   { path: 'registration', component: RegistrationComponent},
-  { path: 'create_project', component: CreateProjectComponent},
+  { path: 'create_project', component: CreateProjectComponent, canActivate: [CreateProjectGuard], pathMatch:'full'},
   { path: 'user/:id', component: UserComponent, pathMatch:'full'},
   { path: 'user/:id/settings', component: SettingsComponent, canActivate: [SettingsGuard], pathMatch:'full'},
   { path: 'project/:title', component: ProjectComponent, pathMatch:'full'},
-  { path: 'payment', component: ProjectComponent, pathMatch:'full'},
-  { path: 'admin', component: AdminComponent},
+  { path: 'payment', component: PaymentComponent, pathMatch:'full'},
+  { path: 'admin/users', component: AdminComponent, canActivate: [AdminGuard]},
   {path: '**', component: NotFoundComponent}
 ];
 
@@ -92,7 +95,10 @@ const appRoutes: Routes =[
     UserService,
     ProjectService,
     ProjectsService,
+    AdminService,
     SettingsGuard,
+    CreateProjectGuard,
+    AdminGuard,
   ],
   bootstrap: [AppComponent]
 })

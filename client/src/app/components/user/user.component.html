@@ -6,7 +6,7 @@
     </div>
     <div class="col-sm-offset-2 col-sm-4">
       <h3 id="username">{{user['username']}}</h3>
-      <button routerLink="/user/{{id}}/settings" type="submit" class="btn btn-info btn-sm" *ngIf="user['username']===currentUser['username']">Редактировать данные</button>
+      <button routerLink="/user/{{id}}/settings" type="submit" class="btn btn-info btn-sm" *ngIf="user['username']===currentUser['username']">Edit data</button>
     </div>
   </div>
 </div>
@@ -19,12 +19,16 @@
         <p *ngFor="let project of projects">
            <app-card [project]="project"></app-card>
         </p>
+        <div class="col-md-offset-1" *ngIf="projects.length === 0" >
+            <h1>No projects</h1>
+        </div>
+
       </tab>
-      <tab title="Support">
+      <!--tab title="Support">
           
       </tab>
       <tab title="Comments">
           
-      </tab>
+      </tab-->
   </tabset>
 </div>

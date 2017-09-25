@@ -3,8 +3,6 @@ var Schema = mongoose.Schema;
 var docs = require('./index');
 var UserSchema = require('./user').UserSchema;
 var UserModel =  mongoose.model('User', UserSchema);
-//var SupporterSchema = require('./supporter').SupporterSchema;
-//var SupporterModel =  mongoose.model('Supporter', SupporterSchema);
 
 var Project = new Schema({
     author: { 
